@@ -22,4 +22,7 @@
 
 <!-- Main JS-->
 <script src="./public/admin_template/js/main.js"></script>
-<!-- <script src="./public/shared/js/jquery-3.6.4.min.js"></script> -->
+<!-- Sweetalert -->
+<script src="./public/shared/js/sweetalert.js"></script>
+<!-- Helper -->
+<script src="./public/shared/js/helper.js"></script>

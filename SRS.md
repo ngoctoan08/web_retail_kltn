@@ -50,3 +50,6 @@
 
 13. tbl_feedback_images
     id, course_feedback_id, name_image, path_image
+
+    <!-- Update fk -->
+    ALTER TABLE `users` ADD CONSTRAINT `fk_role_user` FOREIGN KEY (`role_id`) REFERENCES `roles`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

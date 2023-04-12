@@ -66,13 +66,14 @@ class User extends Connect
         return $pre->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    public function addUser($email, $password, $name)
+    public function addUser($email, $password, $name, $avatar)
     {
-        $sql = "INSERT INTO `users` (`email`, `password`, `name`) VALUES (:email, :password, :name)";
+        $sql = "INSERT INTO `users` (`name`, `email`, `password`, `avatar`) VALUES (:name, :email, :password, :avatar)";
         $pre= $this->pdo->prepare($sql);
         $pre->bindParam(':email', $email);
         $pre->bindParam(':password', $password);
         $pre->bindParam(':name', $name);
+        $pre->bindParam(':avatar', $avatar);
         return $pre->execute();
     }
 
