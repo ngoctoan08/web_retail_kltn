@@ -86,7 +86,7 @@ function createAccount(data) {
     fetch(data.url, options)
         .then((response) => response.json())
         .then((data) => {
-            if (data.status == 201) {
+            if (data.status == 200) {
                 alertSuccess(data.message);
                 setTimeout(
                     location.href = "http://localhost/quan_ly_nhan_su/index.php?page=login", 3000
@@ -99,4 +99,4 @@ function createAccount(data) {
 </script>
 <?php $script = ob_get_clean(); ?>
 
-<?php include_once "./Views/layouts/app.php"; ?>
+<?php include_once "./Views/layouts/app_auth.php"; ?>

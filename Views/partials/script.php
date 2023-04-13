@@ -20,9 +20,13 @@
 <script src="./public/admin_template/vendor/select2/select2.min.js">
 </script>
 
+<!-- Datatable -->
+<script src="./public/shared/DataTables/datatables.min.js"></script>
 <!-- Main JS-->
 <script src="./public/admin_template/js/main.js"></script>
 <!-- Sweetalert -->
 <script src="./public/shared/js/sweetalert.js"></script>
 <!-- Helper -->
 <script src="./public/shared/js/helper.js"></script>
+<!-- Main js -->
+<script src="./public/shared/js/main.js"></script>

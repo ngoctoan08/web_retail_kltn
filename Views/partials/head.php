@@ -26,5 +26,11 @@
 <link href="./public/admin_template/vendor/select2/select2.min.css" rel="stylesheet" media="all">
 <link href="./public/admin_template/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
 
+<!-- Font awesome -->
+<link href="./public/shared/font-awesome/css/all.min.css" rel="stylesheet" media="all">
+
 <!-- Main CSS-->
 <link href="./public/admin_template/css/theme.css" rel="stylesheet" media="all">
+
+<!-- Datatable -->
+<link href="./public/shared/DataTables/datatables.min.css" rel="stylesheet" media="all">

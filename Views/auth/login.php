@@ -12,24 +12,21 @@ Login
 <div class="login-wrap">
     <div class="login-content">
         <div class="login-form">
-            <form action="" method="POST" name="form_login" id="#form_login">
-                <input type="hidden" name="url" value="index.php?page=login&method=check">
+            <form action="" method="POST" name="frm_register" id="frm_register">
+                <input type="hidden" name="url" value="index.php?page=login&method=auth">
                 <div class="form-group">
                     <label>Email</label>
-                    <input class="au-input au-input--full" type="email" id="email" name="email"
-                        placeholder="Nhập email..."
-                        value="<?= isset($_COOKIE['username']) ? $_COOKIE['username'] : ""; ?>">
+                    <input class="au-input au-input--full" id="email" type="email" name="email"
+                        placeholder="Nhập email..." value="local-admin@gmail.com">
                 </div>
                 <div class="form-group">
                     <label>Mật khẩu</label>
                     <input class="au-input au-input--full" id="password" type="password" name="password"
-                        placeholder="Nhập mật khẩu..."
-                        value="<?= isset($_COOKIE['password']) ? $_COOKIE['password'] : ""; ?>">
+                        placeholder="Nhập mật khẩu..." value="toandaika">
                 </div>
                 <div class="login-checkbox">
                     <label>
-                        <input type="checkbox" name="remember" id="remember" <?= $check ? "checked" : ""; ?>
-                            value="1">Nhớ mật khẩu
+                        <input type="checkbox" name="remember" value="1">Nhớ mật khẩu
                     </label>
                 </div>
                 <button class="au-btn au-btn--block au-btn--green m-b-20" name="submit_login" type="submit">
@@ -52,7 +49,7 @@ Login
 <script src="./public/shared/js/validator.js"></script>
 <script>
 Validator({
-    form: '#form_login',
+    form: '#frm_register',
     errorSelector: '.form-error',
     rules: [
         Validator.isRequired('#email'),
@@ -79,7 +76,7 @@ function handleLogin(data) {
     fetch(data.url, options)
         .then((response) => response.json())
         .then((data) => {
-            if (data.status == 201) {
+            if (data.status == 200) {
                 alertSuccess(data.message);
             } else {
                 alertError(data.message);
@@ -90,4 +87,4 @@ function handleLogin(data) {
 <?php $script = ob_get_clean(); ?>
 
 <!-- Kế thừa view -->
-<?php include_once "./Views/layouts/app.php"; ?>
+<?php include_once "./Views/layouts/app_auth.php"; ?>

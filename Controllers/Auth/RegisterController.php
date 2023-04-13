@@ -1,10 +1,6 @@
 <?php
-if(!isset($method)){
-    include_once './Controllers/Controller.php';
-}
-else {
-    include_once '../Controllers/Controller.php';
-}
+include_once './Controllers/Controller.php';
+
 class RegisterController extends Controller
 {
     public $userModel;
@@ -17,7 +13,7 @@ class RegisterController extends Controller
     public function index()
     {
         $method = isset($_GET['method']) ? $_GET['method'] : 'register';
-        if(empty($method) || $method == 'register') {
+        if($method == 'register') {
             include_once './Views/auth/register.php';
             return;
         }
@@ -41,11 +37,11 @@ class RegisterController extends Controller
             $avatar = '';
             try {
                 $user = $this->userModel->showUserByEmail($email);
-                if(!isset($user['email']) || $email != $user['email']) {
+                if(!isset($user) || empty($user)) {
                     $addUser = $this->userModel->addUser($email, $password, $name, $avatar);
                     if($addUser) {
                         echo json_encode([
-                            'status' => 201,
+                            'status' => 200,
                             'message' => 'Đăng ký tài khoản thành công!',
                         ]);
                     }
@@ -67,3 +63,5 @@ class RegisterController extends Controller
         }
     }
 }
+// run
+$register = new RegisterController();

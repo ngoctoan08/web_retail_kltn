@@ -11,25 +11,26 @@ class LoginController extends Controller
 
     public function index ()
     {
-        $method = isset($_GET['method']) ? $_GET['method'] : 'login';
-        if(empty($method) || $method == 'login') {
+        $method = isset($_GET['method']) ? $_GET['method'] : '';
+
+        if(empty($method)) {
             include_once './Views/auth/login.php';
             return;
         }
         else {
-            if($method == 'check') {
-                $this->checkUser();
+            if($method == 'auth') {
+                $this->authentication();
             }
         }
     }
 
-    public function checkUser()
+    public function authentication()
     {
         $data = json_decode(file_get_contents('php://input'), true);
         if(isset($data)) {
             $email = $data['email'];
             $password = $data['password'];
-            $remember = $data['remember'];
+            $remember = isset($data['remember']) ? $data['remember'] : '';
             $user = $this->userModel->showUserByEmail($email);
             $dbPass = md5($password);
 
@@ -58,3 +59,4 @@ class LoginController extends Controller
         
     }
 }
+$login = new LoginController();
