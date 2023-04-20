@@ -36,3 +36,104 @@ $(document).ready(function () {
         ]
     });
 });
+
+
+function changeDepartment()
+{
+    
+}
+// handle onchange department
+$(document).ready(function () {
+    $('.change_department').on('change', function() {
+        var selectedOption = $(this).find("option:selected");
+        var departmentId = selectedOption.attr('departmentId');
+        var url = "http://localhost/quan_ly_nhan_su/index.php?page=employee&method=getPosition"
+        data = {url, departmentId};
+        var options = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(data) // body data type must match "Content-Type" header
+        }
+        // Fetch API 
+        fetch(data.url, options)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.status == 200) {
+                    // inner html
+                    $('#position').empty();
+                    if(data.html != '') {
+                        $('#position').html(data.html)
+                        // $('#position').append(data.html);
+                    }
+                    else{
+                        $('#position').empty();
+                    }
+                } 
+            })
+    });
+});
+
+// handle upload img
+
+
+$(document).ready(function(){
+    // Lắng nghe sự kiện khi người dùng chọn ảnh
+    document.getElementById('avatar').click();
+    $('#avatar').change(function(event){
+        console.log(123);
+        var files = event.target.files;
+        for (var i = 0; i < files.length; i++) {
+            var imageUrl = URL.createObjectURL(files[i]);
+            var img = $('<img>').attr('src', imageUrl);
+            $('#uploadedImages').append(img);
+        }
+    });
+});
+
+function deleteEmployee(request) {
+    var options = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(request.id) // body data type must match "Content-Type" header
+    }
+    // Fetch API 
+    fetch(request.url, options)
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.status == 200) {
+                alertSuccess(data.message);
+                location.reload();
+            } 
+        })
+}
+
+
+function handleDelete()
+{
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+            var id = $(this).attr('data-id');
+            var url = $(this).attr('url'); //
+            var request = {id, url};
+            deleteEmployee(request);
+        }
+      })
+}
+$(document).ready(function(){
+    $('#del_item').on('click', handleDelete);
+});
+

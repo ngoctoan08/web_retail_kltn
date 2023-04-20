@@ -78,6 +78,7 @@ function handleLogin(data) {
         .then((data) => {
             if (data.status == 200) {
                 alertSuccess(data.message);
+                location.href = data.redirect;
             } else {
                 alertError(data.message);
             }

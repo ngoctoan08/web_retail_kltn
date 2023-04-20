@@ -43,6 +43,7 @@ class RegisterController extends Controller
                         echo json_encode([
                             'status' => 200,
                             'message' => 'Đăng ký tài khoản thành công!',
+                            'lastId' => $this->userModel->returnLastId()
                         ]);
                     }
                 }

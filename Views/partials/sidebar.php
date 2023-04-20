@@ -14,26 +14,26 @@
 
                 <li class="<?=checkActive('product')?> <?=checkActive('category')?> has-sub">
                     <a class="js-arrow" href="#">
-                        <i class="fas fa-solid fa-cube"></i>Quản lý Sản phẩm</a>
+                        <i class="fas fa-solid fa-cube"></i>Quản lý nhân viên</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li <?= checkActive('product') ?>>
-                            <a href="index.php?page=product">Sản phẩm</a>
+                            <a href="index.php?page=employee">Danh sách</a>
                         </li>
                         <li <?= checkActive('category') ?>>
-                            <a href="index.php?page=category">Danh mục</a>
+                            <a href="index.php?page=employee&method=create">Thêm nhân viên</a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="<?=checkActive('order')?> <?=checkActive('bill')?> has-sub">
                     <a class="js-arrow" href="#">
-                        <i class="fas fa-solid fa-exchange"></i>Quản lý Đơn hàng</a>
+                        <i class="fas fa-solid fa-exchange"></i>Quản lý khóa học</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
-                            <a href="index.php?page=order">Đặt hàng</a>
+                            <a href="index.php?page=course">Danh sách khóa học</a>
                         </li>
                         <li>
-                            <a href="index.php?page=bill">Hóa đơn</a>
+                            <a href="index.php?page=course&method=create">Thêm khóa học</a>
                         </li>
                     </ul>
                 </li>

@@ -77,4 +77,9 @@ class User extends Connect
         return $pre->execute();
     }
 
+    public function returnLastId()
+    {
+        return $this->pdo->lastInsertId();
+    }
+    
 }

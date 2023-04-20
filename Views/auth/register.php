@@ -88,6 +88,7 @@ function createAccount(data) {
         .then((data) => {
             if (data.status == 200) {
                 alertSuccess(data.message);
+                // alert(data.lastId);
                 setTimeout(
                     location.href = "http://localhost/quan_ly_nhan_su/index.php?page=login", 3000
                 );

@@ -12,8 +12,13 @@ switch ($page) {
         }
         include_once './Controllers/Web/EmployeeController.php';
         break;
+    case 'dashboard':
+        include_once './Controllers/Web/EmployeeController.php';
+        break;
     case 'employee':
         include_once './Controllers/Web/EmployeeController.php';
+        break;
+    case 'course':
         break;
     case 'login':
         include_once './Controllers/Auth/LoginController.php';

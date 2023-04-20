@@ -22,13 +22,28 @@ class EmployeeController extends Controller
                 $this->store();
                 break;
             case 'show':
+                $id = isset($_GET['id']) ? $_GET['id'] : '';
+                $this->show($id);
                 break;
             case 'edit':
+                $id = isset($_GET['id']) ? $_GET['id'] : '';
+                $this->edit($id);
                 break;
             case 'update':
+                $id = isset($_GET['id']) ? $_GET['id'] : '';
+                $this->update($id);
+                break;
+            case 'delete':
+                $id = isset($_GET['id']) ? $_GET['id'] : '';
+                $this->delete();
+                break;
+            case 'getPosition':
+                $this->getPosition();
                 break;
             default:
-                $users = $this->userModel->showAllUser();
+                $employees = $this->employeeModel->showAllEmployee();
+
+                // var_dump($employees);
                 include_once './Views/pages/manage_employee/index.php';
                 break;
         }
@@ -49,9 +64,10 @@ class EmployeeController extends Controller
 
     public function store()
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-
-        if(isset($data)) {
+        // $data = json_decode(file_get_contents('php://input'), true);
+        
+        if(isset($_POST)) {
+            $data = $_POST;
             $nameEmployee = $data['name'];
             $address = $data['address'];
             $gender = $data['gender'];
@@ -64,62 +80,163 @@ class EmployeeController extends Controller
             $salary = $data['salary'];
             $start_date = $data['start_date'];
             $end_date = $data['end_date'];
+            $description = 'nhân viên mới';
+            
+            $fileAvatar = $_FILES['avatar'];
+            
             try {
                 // insert employee
-                $this->employeeModel->addEmployee($birth_date, $gender, $nameEmployee, '$avatar', $tel, $email, '$description', $address);
+                $fileName = time().$fileAvatar['name'];
+                $addEmployee = $this->employeeModel->addEmployee($birth_date, $gender, $nameEmployee, $fileName, $tel, $email, $description, $address);
+                move_uploaded_file($fileAvatar['tmp_name'], './public/storage/employee_images/'.$fileName);
+                
                 $lastIdEmployee = $this->employeeModel->returnLastId();
-                // insert employee details
-                $this->employeeModel->addEmployeeDetail($lastIdEmployee, '$educationName', $position, $department);
+                //insert employee details
+                $addDetail = $this->employeeModel->addEmployeeDetail($lastIdEmployee, '$educationName', $position, $department);
                 // insert contracts
-                $this->employeeModel->addContract($contractName, '$description', $salary, $start_date, $end_date, $lastIdEmployee, '1');
-                echo json_encode([
-                    'status' => 200,
-                    'message' => 'Thêm nhân viên mới thành công!',
-                ]);
-                //code...
+                $addContract = $this->employeeModel->addContract($contractName, '$description', $salary, $start_date, $end_date, $lastIdEmployee, '1');
+
+                if($addEmployee && $addDetail && $addContract) {
+                    $_SESSION['success'] = "Thêm nhân viên mới thành công!";
+                    header('location: index.php?page=employee&method=show&id='.$lastIdEmployee);
+                    // echo json_encode([
+                    //     'status' => 200,
+                    //     'message' => 'Thêm nhân viên mới thành công!',
+                    // ]);
+                }
             } catch (\Throwable $th) {
                 echo json_encode([
                     'status' => 401,
-                    'message' => $th,
+                    'message' => $th->getMessage(),
                 ]);
             }
         }
     }
 
-    
-    public function authentication()
+    public function show($id)
     {
-        $data = json_decode(file_get_contents('php://input'), true);
-        if(isset($data)) {
-            $email = $data['email'];
-            $password = $data['password'];
-            $remember = isset($data['remember']) ? $data['remember'] : '';
-            $user = $this->userModel->showUserByEmail($email);
-            $dbPass = md5($password);
+        if(!empty($id))
+        {
+            
+            $employee = $this->employeeModel->showEmployeeById($id);
+            include_once './Views/pages/manage_employee/show.php';
+        }
+    }
 
-            // Đăng nhập thành công
-            if(!empty($user) && $user['password'] == $dbPass) {
-                if(isset($remember)){
-                    setcookie("username", $email);
-                    setcookie("password", $password);
+    public function edit($id)
+    {
+        if(!empty($id))
+        {
+            // department
+            $departments = $this->employeeModel->showAllDepartment();
+            $positions = $this->employeeModel->showPosition(2);
+            // contract
+            $contracts = $this->employeeModel->showAllContractType();
+            
+            $employee = $this->employeeModel->showEmployeeById($id);
+            include_once './Views/pages/manage_employee/edit.php';
+
+            // echo "<pre>";
+            // print_r($employee);
+            // echo "</pre>";
+        }
+    }
+
+    public function update($id)
+    {
+        // get info employee
+        $employee = $this->employeeModel->showEmployeeById($id);
+        // echo $id;
+        // die();
+        if(isset($_POST)) {
+            $nameEmployee = $_POST['name'];
+            $address = $_POST['address'];
+            $gender = $_POST['gender'];
+            $email = $_POST['email'];
+            $birth_date = $_POST['birth_date'];
+            $contractName = $_POST['contract'];
+            $department = isset($_POST['department']) ? $_POST['department'] : $employee['department'];
+            $position = isset($_POST['position']) ? $_POST['position'] : $employee['position'];
+            
+            $tel = $_POST['tel'];
+            $salary = $_POST['salary'];
+            $start_date = $_POST['start_date'];
+            $end_date = $_POST['end_date'];
+            $description = 'nhân viên mới';
+            $educationName = "Đại học";
+            $fileAvatar = $_FILES['avatar'];
+
+            $contract_type_id = 3;
+            // echo "<pre>";
+            // print_r($data);
+            // echo "</pre>";
+            // die();
+            try {
+                // update employee
+                $fileName = $employee['avatar'];
+                if(!empty($fileAvatar['name'])) {
+                    $fileName = $fileAvatar['name'];
+                    move_uploaded_file($fileAvatar['tmp_name'], './public/storage/employee_images/'.$fileName);
                 }
-                $_SESSION['id_account'] = $user['id'];
-                $_SESSION['role_account'] = $user['role_id'];
-                $_SESSION['name_account'] = $user['name'];
-                $_SESSION['email_account'] = $user['email'];
-                echo json_encode([
-                    'status' => 200,
-                    'message' => 'Đăng nhập thành công!',
-                ]);
-            }
-            else {
+                
+                $updateEmp = $this->employeeModel->updateEmployee($id, $birth_date, $gender, $nameEmployee, $fileName, $tel, $email, $description, $address);
+
+                $updateEmpDetail = $this->employeeModel->updateDetail($id, $educationName, $position, $department);
+                
+                $updateContract = $this->employeeModel->updateContract($contractName, $description, $salary, $start_date, $end_date, $id, $contract_type_id);
+                
+                if($updateEmp || $updateEmpDetail || $updateContract) {
+                    $_SESSION['success'] = "Cập nhật thành công!";
+                    header('location: index.php?page=employee&method=edit&id='.$id);
+                }
+            } catch (\Throwable $th) {
                 echo json_encode([
                     'status' => 401,
-                    'message' => 'Đăng nhập thất bại!',
+                    'message' => $th->getMessage(),
                 ]);
             }
         }
+    }
+    
+    public function delete() {
+        $id = json_decode(file_get_contents('php://input'), true);
+        try {
+            //code...
+            $delete = $this->employeeModel->deleteEmployee($id);
+            if($delete) {
+                // $_SESSION['success'] = "Cập nhật thành công!";
+                // header('location: index.php?page=employee');
+                echo json_encode([
+                        'status' => 200,
+                        'message' => 'Xóa nhân viên thành công!',
+                    ]);
+                    
+            }
+        } catch (\Throwable $th) {
+            echo json_encode([
+                'status' => 401,
+                'message' => $th->getMessage(),
+            ]);
+        }
         
+    }
+    
+    public function getPosition()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        // get posiotion by departmet id
+        if(isset($data)) {
+            $departmentId = $data['departmentId'];
+            $positions = $this->employeeModel->showPosition($departmentId);
+            $html = '';
+            foreach($positions as $position) {
+                $html .= "<option value='" .$position['name']. "'" . ">" .$position['name']."</option>";
+            }
+            echo json_encode([
+                'status' => 200,
+                'html' => $html,
+            ]);
+        }
     }
 }
 $employee = new EmployeeController();

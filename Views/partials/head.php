@@ -32,5 +32,7 @@
 <!-- Main CSS-->
 <link href="./public/admin_template/css/theme.css" rel="stylesheet" media="all">
 
+<link href="./public/shared/css/main.css" rel="stylesheet" media="all">
+
 <!-- Datatable -->
 <link href="./public/shared/DataTables/datatables.min.css" rel="stylesheet" media="all">

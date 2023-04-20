@@ -8,7 +8,7 @@ Thêm mới nhân viên
     <div class="section__content section__content--p30">
         <div class="container-fluid">
             <a href="index.php?page=employee"><button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                    <i class="fa fa-list-ul"></i>Danh sách sản phẩm</button></a>
+                    <i class="fa fa-list-ul"></i>Danh sách nhân viên</button></a>
             <div class="card m-t-30">
                 <div class="card-body card-block">
                     <form id="frm_create" action="index.php?page=employee&method=store" method="POST"
@@ -95,11 +95,15 @@ Thêm mới nhân viên
                                         <label for="department" class=" form-control-label">Phòng ban</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <select required name="department" id="department" class="form-control">
+                                        <select required name="department" id="department"
+                                            class="form-control change_department">
                                             <?php
                                         foreach($departments as $department) {
                                         ?>
-                                            <option value="<?=$department['name']?>"><?=$department['name']?></option>
+                                            <option departmentId="<?=$department['id']?>"
+                                                value="<?=$department['name']?>">
+                                                <?=$department['name']?>
+                                            </option>
                                             <?php }?>
                                         </select>
                                     </div>
@@ -112,11 +116,7 @@ Thêm mới nhân viên
                                     </div>
                                     <div class="col-12 col-md-9">
                                         <select required name="position" id="position" class="form-control">
-                                            <?php
-                                                foreach($departments as $department) {
-                                            ?>
-                                            <option value="<?=$department['name']?>"><?=$department['name']?></option>
-                                            <?php }?>
+
                                         </select>
                                     </div>
                                 </div>
@@ -174,16 +174,20 @@ Thêm mới nhân viên
                             </div>
                         </div>
 
-                        <!-- <div class="row form-group">
+                        <div class="row form-group">
                             <div class="col col-md-3">
                                 <label for="avatar" class=" form-control-label">Ảnh đại diện</label>
                             </div>
                             <div class="col-12 col-md-9">
-                                <input type="file" required id="avatar" name="avatar" class="form-control-file"
-                                    accept="image/png, image/jpeg, image/jpg" class="up_avatar">
-                                <img class="m-t-10 up_ava__success" style="width: 100px;" src="" alt="">
+                                <input type="file" id="avatar" name="avatar" multiple=""
+                                    accept="image/png, image/jpeg, image/jpg">
+                                <div id="uploadedImages">
+
+                                </div>
+
                             </div>
-                        </div> -->
+                        </div>
+
                         <div class="card-footer">
                             <button type="submit" class="btn btn-primary btn-sm" name="add_employee">
                                 <i class="fa fa-dot-circle-o"></i> Lưu
@@ -206,28 +210,28 @@ Thêm mới nhân viên
 <?php ob_start(); ?>
 <script src="./public/shared/js/validator.js"></script>
 <script>
-Validator({
-    form: '#frm_create',
-    errorSelector: '.form-error',
-    rules: [
-        Validator.isRequired('#name'),
-        Validator.isRequired('#email'),
-        Validator.isEmail('#email'),
-        Validator.isRequired('#address'),
-        Validator.isRequired('#gender'),
-        Validator.isRequired('#tel'),
-        Validator.isRequired('#contract'),
-        Validator.isRequired('#department'),
-        Validator.isRequired('#position'),
-        Validator.isRequired('#salary'),
+// Validator({
+//     form: '#frm_create',
+//     errorSelector: '.form-error',
+//     rules: [
+//         Validator.isRequired('#name'),
+//         Validator.isRequired('#email'),
+//         Validator.isEmail('#email'),
+//         Validator.isRequired('#address'),
+//         Validator.isRequired('#gender'),
+//         Validator.isRequired('#tel'),
+//         Validator.isRequired('#contract'),
+//         Validator.isRequired('#department'),
+//         Validator.isRequired('#position'),
+//         Validator.isRequired('#salary'),
 
-    ],
-    onSubmit: function(data) {
-        // Call API
-        console.log(data);
-        createEmployee(data)
-    }
-});
+//     ],
+//     onSubmit: function(data) {
+//         // Call API
+//         console.log(data);
+//         createEmployee(data)
+//     }
+// });
 
 function createEmployee(data) {
     var options = {
@@ -244,6 +248,7 @@ function createEmployee(data) {
         .then((data) => {
             if (data.status == 200) {
                 alertSuccess(data.message);
+                location.reload();
             } else {
                 alertError(data.message);
             }
