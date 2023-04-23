@@ -28,6 +28,13 @@ class Employee extends Connect
         return $pre->fetch(PDO::FETCH_ASSOC);
     }
     
+    public function getAvatar($employeeId) {
+        $sql = "SELECT employees.avatar FROM employees WHERE employees.id = :id";
+        $pre = $this->pdo->prepare($sql);
+        $pre->bindParam(':id', $employeeId);
+        $pre->execute();
+        return $pre->fetch(PDO::FETCH_ASSOC);
+    }
     /**
      * @return array
      */

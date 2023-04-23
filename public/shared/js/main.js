@@ -1,6 +1,10 @@
 $(document).ready(function () {
     $('.list_employee').DataTable({
-        order: [[1, 'asc']],
+        order: [[0, 'asc']],
+    });
+
+    $('.list_course').DataTable({
+        order: [[0, 'asc']],
     });
     
     $('.list_bill').DataTable({
@@ -93,14 +97,16 @@ $(document).ready(function(){
     });
 });
 
-function deleteEmployee(request) {
+
+// request
+function deleteItem(request) {
     var options = {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
-        body: JSON.stringify(request.id) // body data type must match "Content-Type" header
+        body: JSON.stringify(request) // body data type must match "Content-Type" header
     }
     // Fetch API 
     fetch(request.url, options)
@@ -108,7 +114,7 @@ function deleteEmployee(request) {
         .then((data) => {
             if (data.status == 200) {
                 alertSuccess(data.message);
-                location.reload();
+                $('#item_' + request.id).remove();
             } 
         })
 }
@@ -129,11 +135,13 @@ function handleDelete()
             var id = $(this).attr('data-id');
             var url = $(this).attr('url'); //
             var request = {id, url};
-            deleteEmployee(request);
+            deleteItem(request);
         }
       })
 }
+
 $(document).ready(function(){
-    $('#del_item').on('click', handleDelete);
+    // $('.del_item').on('click', handleDelete);
+    $('.del_item').on('click', handleDelete);
 });
 

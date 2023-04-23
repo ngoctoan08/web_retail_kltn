@@ -19,6 +19,7 @@ switch ($page) {
         include_once './Controllers/Web/EmployeeController.php';
         break;
     case 'course':
+        include_once './Controllers/Web/CourseController.php';
         break;
     case 'login':
         include_once './Controllers/Auth/LoginController.php';

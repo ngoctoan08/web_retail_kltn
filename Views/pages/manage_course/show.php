@@ -1,5 +1,5 @@
 <?php ob_start(); ?>
-Thông tin nhân viên
+Thông tin khóa học
 <?php $title = ob_get_clean(); ?>
 
 <!-- Content -->
@@ -10,14 +10,13 @@ Thông tin nhân viên
         <div class="container-fluid">
             <div id="noti"></div>
             <div class="col-lg-12">
-                <a href="index.php?page=employee"><button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                        <i class="zmdi zmdi-plus"></i>Danh sách nhân viên</button></a>
+                <a href="index.php?page=course"><button class="au-btn au-btn-icon au-btn--green au-btn--small">
+                        <i class="zmdi zmdi-plus"></i>Danh sách khóa học</button></a>
                 <div class="card m-t-30">
                     <div class="card-header">
-                        <strong>Thông tin nhân viên</strong>
+                        <strong>Thông tin khóa học</strong>
                     </div>
                     <div class="card-body card-block text-left">
-
                         <div class="row form-group">
                             <div class="col-6">
                                 <div class="col-12 col-md-12">
@@ -26,7 +25,7 @@ Thông tin nhân viên
                             </div>
                             <div class="col-6">
                                 <div class="col-12 col-md-12">
-                                    <img src="./public/storage/employee_images/<?=$employee['avatar']?>" alt=""
+                                    <img src="./public/storage/courses_images/<?=$course['avatar']?>" alt=""
                                         width="100px">
                                 </div>
                             </div>
@@ -35,30 +34,12 @@ Thông tin nhân viên
                         <div class="row form-group">
                             <div class="col-6">
                                 <div class="col-12 col-md-12">
-                                    <p class="form-control-static">Mã nhân viên: <b><?=$employee['id']?></b></p>
+                                    <p class="form-control-static">Mã khóa học: <b><?=$course['id']?></b></p>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="col-12 col-md-12">
-                                    <p class="form-control-static">Họ tên: <?=$employee['name']?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-6">
-                                <div class="col-12 col-md-12">
-                                    <div class="input-group">
-                                        <p class="form-control-static">Ngày sinh: <?=$employee['birth_date']?></p>
-                                        <!-- <div class="input-group-addon">
-                                                <i class="far fa-calculator"></i>
-                                                <i class="far fa-envelope"></i>
-                                            </div> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="col-12 col-md-12">
-                                    <p class="form-control-static">Số điện thoại: <?=$employee['tel']?></p>
+                                    <p class="form-control-static">Tên khóa học: <?=$course['name']?></p>
                                 </div>
                             </div>
                         </div>
@@ -66,26 +47,24 @@ Thông tin nhân viên
                         <div class="row form-group">
                             <div class="col-6">
                                 <div class="col-12 col-md-12">
-                                    <p class="form-control-static ">Trạng thái: <b
-                                            class="<?=classStatusUser($employee['status'])?>"><?=statusUser($employee['status']);?></b>
-                                    </p>
+                                    <p class="form-control-static"> Ngày bắt đầu: <?=$course['start_date']?></p>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="col-12 col-md-12">
-                                    <p class="form-control-static">Email: <?=$employee['email']?></p>
+                                    <p class="form-control-static">Ngày kết thúc: <?=$course['end_date']?></p>
                                 </div>
                             </div>
                         </div>
                         <div class="row form-group">
                             <div class="col-6">
                                 <div class="col-12 col-md-12">
-                                    <p class="form-control-static"> Giới tính: <?=$employee['gender']?></p>
+                                    <p class="form-control-static"> Thời lượng: <?=$course['course_duration']?></p>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="col-12 col-md-12">
-                                    <p class="form-control-static">Địa chỉ: <?=$employee['address']?></p>
+                                    <p class="form-control-static">Trạng thái: <?=$course['status']?></p>
                                 </div>
                             </div>
                         </div>
@@ -93,40 +72,17 @@ Thông tin nhân viên
                         <div class="row form-group">
                             <div class="col-6">
                                 <div class="col-12 col-md-12">
-                                    <p class="form-control-static"> Phòng ban: <?=$employee['department_name']?></p>
+                                    <label for="">Mô tả</label>
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="col-12 col-md-12">
-                                    <p class="form-control-static">Chức vụ: <?=$employee['position_name']?></p>
+                                    <p class="form-control-static"><?=$course['description']?></p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row form-group">
-                            <div class="col-6">
-                                <div class="col-12 col-md-12">
-                                    <p class="form-control-static"> Hợp đồng: <?=$employee['contract_name']?></p>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="col-12 col-md-12">
-                                    <p class="form-control-static">Lương: <?=$employee['salary']?></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row form-group">
-                            <div class="col-6">
-                                <div class="col-12 col-md-12">
-                                    <p class="form-control-static"> Ngày bắt đầu: <?=$employee['start_date']?></p>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="col-12 col-md-12">
-                                    <p class="form-control-static">Ngày kết thúc: <?=$employee['end_date']?></p>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -191,11 +147,11 @@ Validator({
     onSubmit: function(data) {
         // Call API
         console.log(data);
-        createEmployee(data)
+        createcourse(data)
     }
 });
 
-function createEmployee(data) {
+function createcourse(data) {
     var options = {
         method: "POST",
         headers: {

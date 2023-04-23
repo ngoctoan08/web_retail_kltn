@@ -119,6 +119,7 @@ class EmployeeController extends Controller
         {
             
             $employee = $this->employeeModel->showEmployeeById($id);
+            
             include_once './Views/pages/manage_employee/show.php';
         }
     }
@@ -173,10 +174,11 @@ class EmployeeController extends Controller
             // die();
             try {
                 // update employee
-                $fileName = $employee['avatar'];
+                $fileName = $oldFile = $employee['avatar'];
                 if(!empty($fileAvatar['name'])) {
                     $fileName = $fileAvatar['name'];
                     move_uploaded_file($fileAvatar['tmp_name'], './public/storage/employee_images/'.$fileName);
+                    unlink('./public/storage/employee_images/'.$oldFile);
                 }
                 
                 $updateEmp = $this->employeeModel->updateEmployee($id, $birth_date, $gender, $nameEmployee, $fileName, $tel, $email, $description, $address);
@@ -199,26 +201,31 @@ class EmployeeController extends Controller
     }
     
     public function delete() {
-        $id = json_decode(file_get_contents('php://input'), true);
-        try {
-            //code...
-            $delete = $this->employeeModel->deleteEmployee($id);
-            if($delete) {
-                // $_SESSION['success'] = "Cập nhật thành công!";
-                // header('location: index.php?page=employee');
-                echo json_encode([
+        $request = json_decode(file_get_contents('php://input'), true);
+        if(!empty($request)) {
+            $id = $request['id'];
+            try {
+                //code...
+                // unlink image in storage                
+                $employee = $this->employeeModel->getAvatar($id);
+                $avatarPath = $employee['avatar'];
+                unlink('./public/storage/employee_images/'.$avatarPath);
+                // do delete
+                $delete = $this->employeeModel->deleteEmployee($id);
+                if($delete) {
+                    echo json_encode([
                         'status' => 200,
                         'message' => 'Xóa nhân viên thành công!',
                     ]);
-                    
+                        
+                }
+            } catch (\Throwable $th) {
+                echo json_encode([
+                    'status' => 401,
+                    'message' => $th->getMessage(),
+                ]);
             }
-        } catch (\Throwable $th) {
-            echo json_encode([
-                'status' => 401,
-                'message' => $th->getMessage(),
-            ]);
         }
-        
     }
     
     public function getPosition()
