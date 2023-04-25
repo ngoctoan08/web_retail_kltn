@@ -38,12 +38,44 @@
                     </ul>
                 </li>
 
-                <li class="<?=checkActive('member')?> <?=$_SESSION['role_account'] != 10 ? 'd-none' : ''?> has-sub">
+                <li class="<?=checkActive('order')?> <?=checkActive('bill')?> has-sub">
                     <a class="js-arrow" href="#">
-                        <i class="fas fa-solid fa-users"></i>Quản lý Nhân viên</a>
+                        <i class="fas fa-solid fa-exchange"></i>Quản lý lớp học</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
-                            <a href="index.php?page=employee">Danh sách thành viên</a>
+                            <a href="index.php?page=classroom">Thông tin phòng</a>
+                        </li>
+                        <li>
+                            <a href="index.php?page=classroom&method=allocate">Danh sách lớp</a>
+                        </li>
+                        <li>
+                            <a href="index.php?page=classroom&method=create_allocate">Phân bổ lớp</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="<?=checkActive('order')?> <?=checkActive('bill')?> has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas fa-solid fa-exchange"></i>Đăng ký khóa học</a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        <li>
+                            <a href="index.php?page=enroll_course">Danh sách</a>
+                        </li>
+                        <li>
+                            <a href="index.php?page=enroll_course&method=create">Đăng ký</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="<?=checkActive('order')?> <?=checkActive('bill')?> has-sub">
+                    <a class="js-arrow" href="#">
+                        <i class="fas fa-solid fa-exchange"></i>Kết quản đào tạo</a>
+                    <ul class="list-unstyled navbar__sub-list js-sub-list">
+                        <li>
+                            <a href="index.php?page=employee_result">Danh sách</a>
+                        </li>
+                        <li>
+                            <a href="index.php?page=employee_result&method=create">Tạo mới</a>
                         </li>
                     </ul>
                 </li>

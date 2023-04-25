@@ -21,6 +21,15 @@ switch ($page) {
     case 'course':
         include_once './Controllers/Web/CourseController.php';
         break;
+    case 'classroom':
+        include_once './Controllers/Web/ClassroomController.php';
+        break;
+    case 'enroll_course':
+        include_once './Controllers/Web/EnrollCourseController.php';
+        break;
+    case 'employee_result':
+        include_once './Controllers/Web/EmployeeResultController.php';
+        break;
     case 'login':
         include_once './Controllers/Auth/LoginController.php';
         break;
