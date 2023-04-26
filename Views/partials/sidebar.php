@@ -1,7 +1,7 @@
 <aside class="menu-sidebar d-none d-lg-block">
     <div class="logo">
         <a href="index.php">
-            <img src=".public/admin_template/images/icon/logo1.png" alt="Cool Admin" />
+            <img style="border-radius: 50%;" src="./public/shared/images/logo.png" width="100px" alt="Cool Admin" />
         </a>
     </div>
     <div class="menu-sidebar__content js-scrollbar1">
@@ -27,7 +27,7 @@
 
                 <li class="<?=checkActive('order')?> <?=checkActive('bill')?> has-sub">
                     <a class="js-arrow" href="#">
-                        <i class="fas fa-solid fa-exchange"></i>Quản lý khóa học</a>
+                        <i class="fas fa-solid fa-book"></i>Quản lý khóa học</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
                             <a href="index.php?page=course">Danh sách khóa học</a>
@@ -40,7 +40,7 @@
 
                 <li class="<?=checkActive('order')?> <?=checkActive('bill')?> has-sub">
                     <a class="js-arrow" href="#">
-                        <i class="fas fa-solid fa-exchange"></i>Quản lý lớp học</a>
+                        <i class="fas fa-solid fa-flag"></i>Quản lý lớp học</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
                             <a href="index.php?page=classroom">Thông tin phòng</a>
@@ -56,7 +56,7 @@
 
                 <li class="<?=checkActive('order')?> <?=checkActive('bill')?> has-sub">
                     <a class="js-arrow" href="#">
-                        <i class="fas fa-solid fa-exchange"></i>Đăng ký khóa học</a>
+                        <i class="fas fa-solid fa-refresh"></i>Đăng ký khóa học</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
                             <a href="index.php?page=enroll_course">Danh sách</a>
@@ -69,7 +69,7 @@
 
                 <li class="<?=checkActive('order')?> <?=checkActive('bill')?> has-sub">
                     <a class="js-arrow" href="#">
-                        <i class="fas fa-solid fa-exchange"></i>Kết quản đào tạo</a>
+                        <i class="fas fa-solid fa-question"></i>Kết quản đào tạo</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
                             <a href="index.php?page=employee_result">Danh sách</a>

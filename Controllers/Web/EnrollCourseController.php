@@ -37,6 +37,8 @@ class EnrollController extends Controller
     // Hiện thị form thêm mới
     public function create()
     {
+        // phòng ban
+        $departments = $this->employeeModel->showAllDepartment();
         // thông tin khóa học
         $courses = $this->courseModel->showAllCourse();
         // nhân viên
@@ -47,7 +49,6 @@ class EnrollController extends Controller
 
     public function store()
     {  
-        ;
         if(isset($_POST)) {
             $courseId = $_POST['course'];
             $employeeId = $_POST['employee'];

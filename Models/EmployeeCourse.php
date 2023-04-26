@@ -18,8 +18,36 @@ class EmployeeCourse extends Connect
         return $pre->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    public function showAllEmployeeDoneCourse()
+    {
+        $sql = "SELECT employee_courses.id, employees.id as 'employee_id', employees.name as 'employee_name', courses.id as 'course_id' , courses.name as 'course_name', employee_courses.score, employee_courses.status FROM `employee_courses` JOIN employees ON employees.id = employee_courses.employee_id JOIN courses ON courses.id = employee_courses.course_id WHERE employee_courses.score IS NOT null";
+        $pre = $this->pdo->prepare($sql);
+        $pre->execute();
+        return $pre->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    /**
+     * @return array
+     */
+    public function getCourseByEmployeeId($employeeId)
+    {
+        $sql = "SELECT employee_courses.id, employee_courses.employee_id, courses.name as 'course_name', employee_courses.score FROM employee_courses JOIN courses ON employee_courses.course_id = courses.id WHERE employee_courses.employee_id = :employeeId and employee_courses.score is null;";
+        $pre = $this->pdo->prepare($sql);
+        $pre->bindParam(':employeeId', $employeeId);
+        $pre->execute();
+        return $pre->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
     //SELECT employees.id as 'employee_id', employees.name as 'employee_name', courses.id as 'course_id' , courses.name as 'course_name', employee_courses.score, employee_courses.status FROM `employee_courses` JOIN employees ON employees.id = employee_courses.employee_id JOIN courses ON courses.id = employee_courses.course_id WHERE employee_courses.score IS NOT null;
 
+    public function updateScore($employeeCourseId, $score)
+    {
+        $sql = "UPDATE `employee_courses` SET employee_courses.score = :score WHERE employee_courses.id = :employeeCourseId";
+        $pre = $this->pdo->prepare($sql);
+        $pre->bindParam(':employeeCourseId', $employeeCourseId);
+        $pre->bindParam(':score', $score);
+        return $pre->execute();
+    }
     
     // show employee by id
     public function showCourseById($courseId)

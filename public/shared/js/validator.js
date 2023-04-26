@@ -157,4 +157,14 @@ Validator.minLength = function(selector, minLength = 10) {
     };
 }
 
+Validator.checkScore = function(selector, min, max) {
+    return {
+        selector: selector,
+        check: function (value) {
+            if(value > min && value <= max) return undefined;
+            else return "Please type " + $(selector).attr("name") + " " + min + " to " + max;
+        }
+    };
+}
+
 

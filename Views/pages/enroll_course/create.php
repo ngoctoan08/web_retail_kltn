@@ -17,14 +17,15 @@
                             <div class="col-6">
                                 <div class="row">
                                     <div class="col col-md-3">
-                                        <label for="name" class=" form-control-label"> Nhân viên</label>
+                                        <label for="name" class=" form-control-label"> Phòng</label>
                                     </div>
                                     <div class="col-12 col-md-9">
-                                        <select required name="employee" id="employee" class="form-control">
+                                        <select required name="department" id="department"
+                                            class="form-control change_department_1">
                                             <?php
-                                            foreach($employees as $employee) {
+                                            foreach($departments as $department) {
                                                 ?>
-                                            <option value="<?=$employee['id']?>"><?=$employee['name']?>
+                                            <option value="<?=$department['name']?>"><?=$department['name']?>
                                             </option>
                                             <?php
                                             }
@@ -33,7 +34,23 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col col-md-3">
+                                        <label for="name" class=" form-control-label"> Nhân viên</label>
+                                    </div>
+                                    <div class="col-12 col-md-9">
+                                        <select required name="employee" id="employee" class="form-control">
 
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="row form-group">
                             <div class="col-6">
                                 <div class="row">
                                     <div class="col col-md-3">
@@ -44,16 +61,15 @@
                                             <?php
                                             foreach($courses as $course) {
                                                 ?>
-                                            <option value="<?=$course['id']?>"><?=$course['name']?></option>
+                                            <option value="<?=$course['id']?>"><?=$course['name']?>
+                                            </option>
                                             <?php
                                             }
-
                                             ?>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
 
 

@@ -8,9 +8,9 @@ Danh sách khóa học
 <div class="main-content">
     <div class="section__content section__content--p30">
         <div class="container-fluid">
-            <a href="index.php?page=course&method=create"><button
+            <a href="index.php?page=enroll_course&method=create"><button
                     class="au-btn au-btn-icon au-btn--green au-btn--small">
-                    <i class="zmdi zmdi-plus"></i>Thêm khóa học</button></a>
+                    <i class="zmdi zmdi-plus"></i>Đăng ký học</button></a>
             <div class="row m-t-30">
                 <div class="col-md-12">
                     <!-- DATA TABLE-->
@@ -68,6 +68,15 @@ Danh sách khóa học
 <!-- script -->
 <?php ob_start(); ?>
 <script src="./public/shared/js/validator.js"></script>
+<script>
+var successMessage = '<?= $_SESSION['success'] ?>';
+if (successMessage) {
+    confirmed = alertSuccess(successMessage);
+    if (confirmed) {
+        <?php unset($_SESSION['success']); ?>
+    }
+}
+</script>
 <?php $script = ob_get_clean(); ?>
 
 <?php include_once "./Views/layouts/app_web.php"; ?>

@@ -27,9 +27,15 @@ class EmployeeResultController extends Controller
                 $id = isset($_GET['id']) ? $_GET['id'] : '';
                 $this->delete();
                 break;
+            case 'get_employee':
+                $this->getEmployee();
+                break;
+            case 'get_course':
+                $this->getCourse();
+                break;
             default:
-                $enrolls = $this->employeeCourseModel->showAllEmployeeCourse();
-                include_once './Views/pages/enroll_course/index.php';
+                $employeeResults = $this->employeeCourseModel->showAllEmployeeDoneCourse();
+                include_once './Views/pages/employee_result/index.php';
                 break;
         }
     }
@@ -45,26 +51,30 @@ class EmployeeResultController extends Controller
         $courses = $this->courseModel->showAllCourse();
         
 
-        include_once './Views/pages/enroll_course/create.php';
+        include_once './Views/pages/employee_result/create.php';
     }
 
+    // update score
     public function store()
     {  
-        ;
-        if(isset($_POST)) {
-            $courseId = $_POST['course'];
-            $employeeId = $_POST['employee'];
-            $score = NULL;
-            
+        $request = json_decode(file_get_contents('php://input'), true);
+        if(!empty($request)) {
+            $employeeCourseId = $request['course'];
+            $score = $request['score'];
             try {
-                $add = $this->employeeCourseModel->addEmployeeCourse($employeeId, $courseId, $score);
-
-                if($add) {
-                    $_SESSION['success'] = "Thêm mới thành công!";
-                    header('location: index.php?page=enroll_course&method=index');
+                $addScore = $this->employeeCourseModel->updateScore($employeeCourseId, $score);
+                
+                if($addScore) {
+                    echo json_encode([
+                        'status' => 200,
+                        'message' => 'Cập nhật điểm thành công!',
+                    ]);
                 }
             } catch (\Throwable $th) {
-                echo ($th->getMessage());
+                echo json_encode([
+                    'status' => 401,
+                    'message' => $th->getMessage(),
+                ]);
             }
         }
     }
@@ -96,10 +106,32 @@ class EmployeeResultController extends Controller
         // get posiotion by departmet id
         if(isset($data)) {
             $departmentName = $data['departmentName'];
-            $positions = $this->employeeModel->showEmployee($departmentName);
+            $employees = $this->employeeModel->showEmployeeByDepartmentName($departmentName);
             $html = '';
-            foreach($positions as $position) {
-                $html .= "<option value='" .$position['name']. "'" . ">" .$position['name']."</option>";
+            foreach($employees as $employee) {
+                $html .= "<option value='" .$employee['id']. "'" . ">" .$employee['name']."</option>";
+            }
+            echo json_encode([
+                'status' => 200,
+                'html' => $html,
+            ]);
+        }
+    }
+
+    public function getCourse()
+    {
+        $data = json_decode(file_get_contents('php://input'), true);
+        // get posiotion by departmet id
+        if(isset($data)) {
+            $employeeId = $data['employeeId'];
+            $courses = $this->employeeCourseModel->getCourseByEmployeeId($employeeId);
+            // echo "<pre>";
+            // print_r($courses);
+            // echo "</pre>";
+            // die();
+            $html = '';
+            foreach($courses as $course) {
+                $html .= "<option value='" .$course['id']. "'" . ">" .$course['course_name']."</option>";
             }
             echo json_encode([
                 'status' => 200,

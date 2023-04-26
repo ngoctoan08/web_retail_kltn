@@ -20,31 +20,35 @@ Kết quả đào tạo
                                 <tr>
                                     <th>#</th>
                                     <th>Mã nhân viên</th>
+                                    <th>Mã lớp</th>
                                     <th>Tên nhân viên</th>
                                     <th>Tên khóa học</th>
+                                    <th>Điểm số</th>
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
                             <tbody id="list_enroll">
                                 <?php 
                                 $i=0;
-                                    foreach($enrolls as $enroll) {
+                                    foreach($employeeResults as $employeeResult) {
                                         $i++;
                                 ?>
-                                <tr class="tr-shadow" id="item_<?=$enroll['id']?>">
+                                <tr class="tr-shadow" id="item_<?=$employeeResult['id']?>">
                                     <td><?=$i?></td>
                                     <td>
                                         <a
-                                            href="index.php?page=enroll_course&method=show&id=<?=$enroll['employee_id']?>">
-                                            <?=$enroll['employee_id']?>
+                                            href="index.php?page=employee&method=show&id=<?=$employeeResult['employee_id']?>">
+                                            <?=$employeeResult['employee_id']?>
                                         </a>
                                     </td>
-                                    <td class="desc"><?=$enroll['employee_name']?></td>
-                                    <td><?=$enroll['course_name']?></td>
+                                    <td><?=$employeeResult['id']?></td>
+                                    <td class="desc"><?=$employeeResult['employee_name']?></td>
+                                    <td><?=$employeeResult['course_name']?></td>
+                                    <td><?=$employeeResult['score']?></td>
                                     <td>
                                         <div class="table-data-feature">
-                                            <button data-id="<?=$enroll['id']?>"
-                                                url="index.php?page=enroll_course&method=delete&id=<?=$enroll['id']?>"
+                                            <button data-id="<?=$employeeResult['id']?>"
+                                                url="index.php?page=employee_result&method=delete&id=<?=$employeeResult['id']?>"
                                                 class="item del_item" data-toggle="tooltip" data-placement="top"
                                                 title="Delete">
                                                 <i class="zmdi zmdi-delete"></i>

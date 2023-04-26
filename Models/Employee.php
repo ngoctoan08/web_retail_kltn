@@ -70,6 +70,16 @@ class Employee extends Connect
         $pre->execute();
         return $pre->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    // show employee by department name
+    public function showEmployeeByDepartmentName($departmentName)
+    {
+        $sql = "SELECT employees.id, employees.name FROM employee_details JOIN employees ON employee_details.employee_id = employees.id WHERE employee_details.department_name like '%$departmentName'";
+        $pre = $this->pdo->prepare($sql);
+        // $pre->bindParam(':id', $departmentId);
+        $pre->execute();
+        return $pre->fetchAll(PDO::FETCH_ASSOC);
+    }
     
     
     public function addEmployee($birthDate, $gender, $name, $avatar, $tel, $email, $description, $address)

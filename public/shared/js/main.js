@@ -42,44 +42,64 @@ $(document).ready(function () {
 });
 
 
-function changeDepartment()
+function sendRequest(dataRequest, selectorResult)
 {
-    
+    var options = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(dataRequest) // body data type must match "Content-Type" header
+    }
+    // Fetch API 
+    fetch(dataRequest.url, options)
+        .then((response) => response.json())
+        .then((data) => {
+            if (data.status == 200) {
+                handleSuccessRespone(selectorResult, data.html)
+            } 
+        })
 }
+
 // handle onchange department
 $(document).ready(function () {
     $('.change_department').on('change', function() {
         var selectedOption = $(this).find("option:selected");
         var departmentId = selectedOption.attr('departmentId');
-        var url = "http://localhost/quan_ly_nhan_su/index.php?page=employee&method=getPosition"
+        var url = "index.php?page=employee&method=getPosition"
         data = {url, departmentId};
-        var options = {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify(data) // body data type must match "Content-Type" header
-        }
-        // Fetch API 
-        fetch(data.url, options)
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.status == 200) {
-                    // inner html
-                    $('#position').empty();
-                    if(data.html != '') {
-                        $('#position').html(data.html)
-                        // $('#position').append(data.html);
-                    }
-                    else{
-                        $('#position').empty();
-                    }
-                } 
-            })
+        sendRequest(data, '#position');
+    });
+
+    $('.change_department_1').on('change', function() {
+        var departmentName = $(this).val();
+        var url = "index.php?page=employee_result&method=get_employee"
+        data = {url, departmentName};
+        sendRequest(data, '#employee');
+    });
+
+    $('.change_employee').on('change', function() {
+        var employeeId = $(this).val();
+        var url = "index.php?page=employee_result&method=get_course"
+        data = {url, employeeId};
+        sendRequest(data, '#course');
     });
 });
 
+// Xử lý kết quả ajax trả về
+function handleSuccessRespone(selectorResult, result)
+{
+    // inner html
+    $(selectorResult).empty();
+    if(data.html != '') {
+        $(selectorResult).html(result)
+        // $('#position').append(data.html);
+    }
+    else{
+        $(selectorResult).empty();
+    }
+}
 // handle upload img
 
 
