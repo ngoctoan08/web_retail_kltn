@@ -1,3 +1,5 @@
+<p align="center"> Hệ thống quản lý nhân sự </p>
+
 <p align="center"> <img src="./public/shared/images/main.PNG" width="400"> </p>
 
 ## Tổng quan về dự án
@@ -14,12 +16,10 @@ Hệ thống được phát triển bằng ngôn ngữ PHP để giúp quản l�
 
 ## Hướng dẫn cài đặt
 
-Để cài đặt ứng dụng này, bạn cần có môi trường web server như Apache và cơ sở dữ liệu MySQL. Sau khi cài đặt môi trường, bạn có thể tải mã nguồn từ Github và giải nén vào thư mục htdocs.
-
 Các bước cụ thể như sau
 1. Clone dự án từ GitHub: `git clone https://github.com/ngoctoan08/quan_ly_nhan_su.git`
-2. Di chuyển vào thư mục dự án: `cd quan_ly_nhan_su`
-3. Chạy ứng dụng: Truy cập http://localhost:8000/quan_ly_nhan_su
+2. Di chuyển vào thư mục htdocs
+3. Khởi động máy chủ ảo (xampp), start apache và mysql
 
 ## Sử dụng
 
