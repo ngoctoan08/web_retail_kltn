@@ -21,7 +21,12 @@ class Employee extends Connect
     // show employee by id
     public function showEmployeeById($employeeId)
     {
-        $sql = "SELECT employees.*, employee_details.education_name, employee_details.position_name, employee_details.department_name, contracts.name AS 'contract_name', contracts.salary, contracts.start_date, contracts.end_date FROM `employees` JOIN employee_details ON employees.id = employee_details.employee_id JOIN contracts ON employees.id = contracts.employee_id WHERE employees.id = :id";
+        $sql = "
+        SELECT employees.*, employee_details.education_name, employee_details.position_name, employee_details.department_name, contracts.name AS 'contract_name', contracts.salary, contracts.start_date, contracts.end_date 
+        FROM `employees` 
+            JOIN employee_details ON employees.id = employee_details.employee_id 
+            JOIN contracts ON employees.id = contracts.employee_id 
+        WHERE employees.id = :id";
         $pre = $this->pdo->prepare($sql);
         $pre->bindParam(':id', $employeeId);
         $pre->execute();

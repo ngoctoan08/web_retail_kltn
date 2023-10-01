@@ -84,6 +84,8 @@ class EmployeeController extends Controller
             
             $fileAvatar = $_FILES['avatar'];
             
+            // print_r($fileAvatar);
+            // die();
             try {
                 // insert employee
                 $fileName = time().$fileAvatar['name'];
