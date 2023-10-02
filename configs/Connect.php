@@ -1,7 +1,7 @@
 <?php
 class Connect
 {
-    const DNS = 'mysql:host=localhost;dbname=quan_ly_nhan_su;charset=utf8mb4';
+    const DNS = 'mysql:host=localhost;dbname=webretail;charset=utf8mb4';
     const USER = 'root';
     const PASSWORD = '';
     public $pdo = null;

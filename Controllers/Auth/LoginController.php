@@ -28,6 +28,7 @@ class LoginController extends Controller
     {
         $data = json_decode(file_get_contents('php://input'), true);
         if(isset($data)) {
+            
             $email = $data['email'];
             $password = $data['password'];
             $remember = isset($data['remember']) ? $data['remember'] : '';
@@ -35,15 +36,15 @@ class LoginController extends Controller
             $dbPass = md5($password);
 
             // Đăng nhập thành công
-            if(!empty($user) && $user['password'] == $dbPass) {
+            if(!empty($user) && $user['Password'] == $dbPass) {
                 if(isset($remember)){
                     setcookie("username", $email);
                     setcookie("password", $password);
                 }
-                $_SESSION['id_account'] = $user['id'];
-                $_SESSION['role_account'] = $user['role_id'];
-                $_SESSION['name_account'] = $user['name'];
-                $_SESSION['email_account'] = $user['email'];
+                $_SESSION['id_account'] = $user['Id'];
+                $_SESSION['role_account'] = $user['RoleId'];
+                $_SESSION['name_account'] = $user['Name'];
+                $_SESSION['email_account'] = $user['Email'];
                 echo json_encode([
                     'status' => 200,
                     'message' => 'Đăng nhập thành công!',
