@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.list_employee').DataTable({
+    $('.list_item').DataTable({
         order: [[0, 'asc']],
     });
 
@@ -52,6 +52,7 @@ function sendRequest(dataRequest, selectorResult)
         },
         body: JSON.stringify(dataRequest) // body data type must match "Content-Type" header
     }
+    
     // Fetch API 
     fetch(dataRequest.url, options)
         .then((response) => response.json())
@@ -155,6 +156,7 @@ function handleDelete()
             var id = $(this).attr('data-id');
             var url = $(this).attr('url'); //
             var request = {id, url};
+            console.log(request);
             deleteItem(request);
         }
       })

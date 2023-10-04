@@ -1,7 +1,7 @@
 <aside class="menu-sidebar d-none d-lg-block">
     <div class="logo">
         <a href="index.php">
-            <img style="border-radius: 50%;" src="./public/shared/images/logo.png" width="100px" alt="Cool Admin" />
+            <!-- <img style="border-radius: 50%;" src="./public/shared/images/logo.png" width="100px" alt="Cool Admin" /> -->
         </a>
     </div>
     <div class="menu-sidebar__content js-scrollbar1">
