@@ -45,3 +45,21 @@ id, code, name, description, docdate, docno, startdate. enddate, đối tượng
 
 5. policyDetails -- bảng chi tiết
 id, PolicyId, EffectiveDate, ItemId, ItemName, Unit, GiftItemId, GiftQuantity, MaxGiftQuantity
+
+
+
+---- Các công việc
+
+1. Quản lý vật tư: OKE
+
+2. Xử lý phần tạo chính sách
+2.1. Hoàn thiện form thêm mới
+.... chưa xong
+-> nghĩ cách xử lý phần dưới lưới
+
+2.2. Xử lý phần thêm mới chính sách
+
+3. Hoàn thiện phần xử lý luật
+3.1. Tạo luật vào đầu vào, đầu ra 
+
+Sau khi hoàn thiện. viết một API gọi luật -> req: itemId, res giftId

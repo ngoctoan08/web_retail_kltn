@@ -10,16 +10,16 @@ switch ($page) {
         if (!isset($_SESSION['id_account'])) {
             header('Location: index.php?page=login');
         }
-        include_once './Controllers/Admin/EmployeeController.php';
+        include_once './Controllers/Admin/ItemController.php';
         break;
     case 'dashboard':
-        include_once './Controllers/Admin/EmployeeController.php';
+        include_once './Controllers/Admin/ItemController.php';
         break;
     case 'item':
         include_once './Controllers/Admin/ItemController.php';
         break;
-    case 'course':
-        include_once './Controllers/Admin/CourseController.php';
+    case 'policy':
+        include_once './Controllers/Admin/PolicyController.php';
         break;
     case 'classroom':
         include_once './Controllers/Admin/ClassroomController.php';

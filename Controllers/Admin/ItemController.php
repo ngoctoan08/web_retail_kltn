@@ -81,7 +81,8 @@ class ItemController extends Controller
                 
                 if($addItem) {
                     $_SESSION['success'] = "Thêm vật tư mới thành công!";
-                    header('location: index.php?page=item&method=show&id='.$lastIdItem);
+                    // header('location: index.php?page=item&method=show&id='.$lastIdItem);
+                    header('location: index.php?page=item&method=create');
                     // header('location: index.php?page=item');
                     // echo json_encode([
                     //     'status' => 200,
@@ -105,7 +106,7 @@ class ItemController extends Controller
         if(!empty($id))
         {
             $item = $this->itemModel->showItemById($id);
-            var_dump($item);
+            // var_dump($item);
 
             $user = $this->userModel->showUserById($item['CreatedBy']);
             

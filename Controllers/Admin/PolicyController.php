@@ -1,13 +1,13 @@
 <?php
 include_once './Controllers/Controller.php';
-class CourseController extends Controller
+class PolicyController extends Controller
 {
     private $userModel;
-    private $courseModel;
+    private $policyModel;
     public function __construct()
     {
         $this->userModel = parent::model('User');
-        $this->courseModel = parent::model('course');
+        $this->policyModel = parent::model('Policy');
         $this->index();
     }
 
@@ -21,32 +21,32 @@ class CourseController extends Controller
             case 'store':
                 $this->store();
                 break;
-            case 'show':
-                $id = isset($_GET['id']) ? $_GET['id'] : '';
-                $this->show($id);
-                break;
-            case 'edit':
-                $id = isset($_GET['id']) ? $_GET['id'] : '';
-                $this->edit($id);
-                break;
-            case 'update':
-                $id = isset($_GET['id']) ? $_GET['id'] : '';
-                $this->update($id);
-                break;
-            case 'delete':
-                $id = isset($_GET['id']) ? $_GET['id'] : '';
-                $this->delete();
-                break;
-            case 'getPosition':
-                $this->getPosition();
-                break;
+            // case 'show':
+            //     $id = isset($_GET['id']) ? $_GET['id'] : '';
+            //     $this->show($id);
+            //     break;
+            // case 'edit':
+            //     $id = isset($_GET['id']) ? $_GET['id'] : '';
+            //     $this->edit($id);
+            //     break;
+            // case 'update':
+            //     $id = isset($_GET['id']) ? $_GET['id'] : '';
+            //     $this->update($id);
+            //     break;
+            // case 'delete':
+            //     $id = isset($_GET['id']) ? $_GET['id'] : '';
+            //     $this->delete();
+            //     break;
+            // case 'getPosition':
+            //     $this->getPosition();
+            //     break;
             default:
-                $courses = $this->courseModel->showAllCourse();
+                $courses = $this->policyModel->showAllPolicy();
                 // echo '<pre>';
                 // print_r($courses);
                 // echo '</pre>';
                 // die();
-                include_once './Views/pages/manage_course/index.php';
+                include_once './Views/pages/manage_policy/index.php';
                 break;
         }
     }
@@ -54,13 +54,18 @@ class CourseController extends Controller
     // Hiện thị form thêm mới
     public function create()
     {
-        
-        include_once './Views/pages/manage_course/create.php';
+        // echo "toandaika";
+        $customers = $this->policyModel->showAllCustomer();
+
+        include_once './Views/pages/manage_policy/create.php';
     }
 
     public function store()
     {  
+        echo '<pre>';
         print_r($_POST);
+        echo '</pre>';
+
         die();
         if(isset($_POST)) {
             $nameCourse = $_POST['name'];
@@ -73,10 +78,10 @@ class CourseController extends Controller
             try {
                 // insert course
                 $fileName = time().$fileAvatar['name'];
-                $addCourse = $this->courseModel->addCourse($nameCourse, $start_date, $end_date, $fileName, $description, $course_duration);
+                $addCourse = $this->policyModel->addCourse($nameCourse, $start_date, $end_date, $fileName, $description, $course_duration);
                 move_uploaded_file($fileAvatar['tmp_name'], './public/storage/courses_images/'.$fileName);
                 
-                $lastIdCourse = $this->courseModel->returnLastId();
+                $lastIdCourse = $this->policyModel->returnLastId();
 
                 if($addCourse) {
                     $_SESSION['success'] = "Thêm khóa học mới thành công!";
@@ -95,9 +100,9 @@ class CourseController extends Controller
     {
         if(!empty($id))
         {
-            $course = $this->courseModel->showCourseById($id);
+            $course = $this->policyModel->showCourseById($id);
             // list học viên đky khóa học
-            include_once './Views/pages/manage_course/show.php';
+            include_once './Views/pages/manage_policy/show.php';
         }
     }
 
@@ -106,8 +111,8 @@ class CourseController extends Controller
         if(!empty($id))
         {
             
-            $course = $this->courseModel->showcourseById($id);
-            include_once './Views/pages/manage_course/edit.php';
+            $course = $this->policyModel->showcourseById($id);
+            include_once './Views/pages/manage_policy/edit.php';
 
             // echo "<pre>";
             // print_r($course);
@@ -118,7 +123,7 @@ class CourseController extends Controller
     public function update($id)
     {
         // get info course
-        $course = $this->courseModel->showCourseById($id);
+        $course = $this->policyModel->showCourseById($id);
         // echo "<pre>";
         //     print_r($course);
         //     echo "</pre>";
@@ -140,7 +145,7 @@ class CourseController extends Controller
                     unlink('./public/storage/courses_images/'.$oldFile);
                 }
                 
-                $updateCourse = $this->courseModel->updateCourse($id, $nameCourse, $start_date, $end_date, $fileName, $description, $course_duration);
+                $updateCourse = $this->policyModel->updateCourse($id, $nameCourse, $start_date, $end_date, $fileName, $description, $course_duration);
 
                 if($updateCourse) {
                     $_SESSION['success'] = "Cập nhật thành công!";
@@ -159,10 +164,10 @@ class CourseController extends Controller
             $id = $request['id'];
             try {
                 //code...
-                $course = $this->courseModel->getAvatar($id);
+                $course = $this->policyModel->getAvatar($id);
                 $avatarPath = $course['avatar'];
                 unlink('./public/storage/courses_images/'.$avatarPath);
-                $delete = $this->courseModel->deleteCourse($id);
+                $delete = $this->policyModel->deleteCourse($id);
                 if($delete) {
                     echo json_encode([
                         'status' => 200,
@@ -184,7 +189,7 @@ class CourseController extends Controller
         // get posiotion by departmet id
         if(isset($data)) {
             $departmentId = $data['departmentId'];
-            $positions = $this->courseModel->showPosition($departmentId);
+            $positions = $this->policyModel->showPosition($departmentId);
             $html = '';
             foreach($positions as $position) {
                 $html .= "<option value='" .$position['name']. "'" . ">" .$position['name']."</option>";
@@ -196,4 +201,4 @@ class CourseController extends Controller
         }
     }
 }
-$course = new CourseController();
+$policy = new PolicyController();

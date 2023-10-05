@@ -14,68 +14,26 @@
 
                 <li class="<?=checkActive('product')?> <?=checkActive('category')?> has-sub">
                     <a class="js-arrow" href="#">
-                        <i class="fas fa-solid fa-cube"></i>Quản lý nhân viên</a>
+                        <i class="fas fa-solid fa-cube"></i>Quản lý vật tư</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li <?= checkActive('product') ?>>
-                            <a href="index.php?page=employee">Danh sách</a>
+                            <a href="index.php?page=item">Danh mục vật tư</a>
                         </li>
                         <li <?= checkActive('category') ?>>
-                            <a href="index.php?page=employee&method=create">Thêm nhân viên</a>
+                            <a href="index.php?page=item&method=create">Thêm mới vật tư</a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="<?=checkActive('order')?> <?=checkActive('bill')?> has-sub">
                     <a class="js-arrow" href="#">
-                        <i class="fas fa-solid fa-book"></i>Quản lý khóa học</a>
+                        <i class="fas fa-solid fa-book"></i>Chính sách khuyến mãi</a>
                     <ul class="list-unstyled navbar__sub-list js-sub-list">
                         <li>
-                            <a href="index.php?page=course">Danh sách khóa học</a>
+                            <a href="index.php?page=policy">Danh sách</a>
                         </li>
                         <li>
-                            <a href="index.php?page=course&method=create">Thêm khóa học</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="<?=checkActive('order')?> <?=checkActive('bill')?> has-sub">
-                    <a class="js-arrow" href="#">
-                        <i class="fas fa-solid fa-flag"></i>Quản lý lớp học</a>
-                    <ul class="list-unstyled navbar__sub-list js-sub-list">
-                        <li>
-                            <a href="index.php?page=classroom">Thông tin phòng</a>
-                        </li>
-                        <li>
-                            <a href="index.php?page=classroom&method=allocate">Danh sách lớp</a>
-                        </li>
-                        <li>
-                            <a href="index.php?page=classroom&method=create_allocate">Phân bổ lớp</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="<?=checkActive('order')?> <?=checkActive('bill')?> has-sub">
-                    <a class="js-arrow" href="#">
-                        <i class="fas fa-solid fa-refresh"></i>Đăng ký khóa học</a>
-                    <ul class="list-unstyled navbar__sub-list js-sub-list">
-                        <li>
-                            <a href="index.php?page=enroll_course">Danh sách</a>
-                        </li>
-                        <li>
-                            <a href="index.php?page=enroll_course&method=create">Đăng ký</a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="<?=checkActive('order')?> <?=checkActive('bill')?> has-sub">
-                    <a class="js-arrow" href="#">
-                        <i class="fas fa-solid fa-question"></i>Kết quản đào tạo</a>
-                    <ul class="list-unstyled navbar__sub-list js-sub-list">
-                        <li>
-                            <a href="index.php?page=employee_result">Danh sách</a>
-                        </li>
-                        <li>
-                            <a href="index.php?page=employee_result&method=create">Tạo mới</a>
+                            <a href="index.php?page=policy&method=create">Thêm mới chính sách</a>
                         </li>
                     </ul>
                 </li>

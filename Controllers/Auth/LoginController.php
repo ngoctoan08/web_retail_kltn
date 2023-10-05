@@ -48,7 +48,7 @@ class LoginController extends Controller
                 echo json_encode([
                     'status' => 200,
                     'message' => 'Đăng nhập thành công!',
-                    'redirect' => 'http://localhost/quan_ly_nhan_su/index.php?page=employee'
+                    'redirect' => 'http://localhost/quan_ly_nhan_su/index.php?page=item'
                 ]);
             }
             else {
