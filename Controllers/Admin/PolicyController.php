@@ -4,10 +4,12 @@ class PolicyController extends Controller
 {
     private $userModel;
     private $policyModel;
+    private $itemModel;
     public function __construct()
     {
         $this->userModel = parent::model('User');
         $this->policyModel = parent::model('Policy');
+        $this->itemModel = parent::model('Item');
         $this->index();
     }
 
@@ -41,11 +43,11 @@ class PolicyController extends Controller
             //     $this->getPosition();
             //     break;
             default:
-                $courses = $this->policyModel->showAllPolicy();
-                // echo '<pre>';
-                // print_r($courses);
-                // echo '</pre>';
-                // die();
+                $policies = $this->policyModel->showAllPolicy();
+                echo '<pre>';
+                print_r($policies);
+                echo '</pre>';
+                die();
                 include_once './Views/pages/manage_policy/index.php';
                 break;
         }
@@ -56,7 +58,8 @@ class PolicyController extends Controller
     {
         // echo "toandaika";
         $customers = $this->policyModel->showAllCustomer();
-
+        $items = $this->itemModel->showAllItem();
+        
         include_once './Views/pages/manage_policy/create.php';
     }
 
@@ -66,26 +69,34 @@ class PolicyController extends Controller
         print_r($_POST);
         echo '</pre>';
 
-        die();
         if(isset($_POST)) {
-            $nameCourse = $_POST['name'];
-            $course_duration = $_POST['course_duration'];
-            $start_date = $_POST['start_date'];
-            $end_date = $_POST['end_date'];
+            $employee_id = $_POST['employee'];
+            $doc_date = $_POST['doc_date'];
+            $doc_no = rand(0,9991);
+            $start_date = !empty($_POST['start_date']) ? $_POST['start_date'] : NULL;
+            $end_date = !empty($_POST['end_date']) ? $_POST['end_date'] : NULL;
             $description = $_POST['description'];
-            $fileAvatar = $_FILES['avatar'];
-            
-            try {
-                // insert course
-                $fileName = time().$fileAvatar['name'];
-                $addCourse = $this->policyModel->addCourse($nameCourse, $start_date, $end_date, $fileName, $description, $course_duration);
-                move_uploaded_file($fileAvatar['tmp_name'], './public/storage/courses_images/'.$fileName);
-                
-                $lastIdCourse = $this->policyModel->returnLastId();
+            // echo $start_date;
+            $itemId = $_POST['ItemId'];
+            $giftItemId = $_POST['GiftItemId'];
+            $giftQuantity = $_POST['GiftQuantity'];
+            $giftMaxQuantity = $_POST['GiftMaxQuantity'];
+            $is_closed = !empty($_POST['isclosed']) ? 1 : 0;
+            // echo "--".sizeof($itemId);
+            // die();
 
-                if($addCourse) {
-                    $_SESSION['success'] = "Thêm khóa học mới thành công!";
-                    header('location: index.php?page=course&method=show&id='.$lastIdCourse);
+            try {
+                $addPolicy = $this->policyModel->addPolicy($doc_date, $doc_no, $description, $start_date, $end_date, $is_closed, $employee_id);
+                $lastIdPolicy = $this->policyModel->returnLastId();
+                $itemName = 'Test';
+                $unit = 'Cái';
+                for($i=0; $i < sizeof($itemId); $i++) {
+                    $addPolicyDetail = $this->policyModel->addPolicyDetail($lastIdPolicy, $itemId[$i], $itemName, $unit, $giftItemId[$i], $giftQuantity[$i], $giftMaxQuantity[$i]);
+                }
+                if($addPolicy && $addPolicyDetail) {
+                    $_SESSION['success'] = "Thêm chính sách mới thành công!";
+                    header('location: index.php?page=policy');
+                    // header('location: index.php?page=policy&method=show&id='.$lastIdPolicy);
                 }
             } catch (\Throwable $th) {
                 echo json_encode([

@@ -35,25 +35,32 @@ class Policy extends Connect
         $pre->execute();
         return $pre->fetch(PDO::FETCH_ASSOC);
     }
-
-    public function getAvatar($courseId) {
-        $sql = "SELECT courses.avatar FROM courses WHERE courses.id = :id";
-        $pre = $this->pdo->prepare($sql);
-        $pre->bindParam(':id', $courseId);
-        $pre->execute();
-        return $pre->fetch(PDO::FETCH_ASSOC);
-    }
     
-    public function addCourse($name, $start_date, $end_date, $avatar, $description, $course_duration)
+    public function addPolicy($doc_date, $doc_no, $description, $start_date, $end_date, $is_closed, $employee_id)
     {   
-        $sql = "INSERT INTO `courses` (`id`, `name`, `description`, `avatar`, `start_date`, `end_date`, `course_duration`, `created_at`, `updated_at`) VALUES (NULL, :name, :description, :avatar, :start_date, :end_date, :course_duration, current_timestamp(), current_timestamp())";
+        $sql = "INSERT INTO `policies` (`DocDate`, `DocNo`, `Description`, `StartDate`, `EndDate`, `IsClosed`, `EmployeeId`) VALUES (:DocDate, :DocNo, :Description, :StartDate, :EndDate, :IsClosed, :EmployeeId)";
         $pre= $this->pdo->prepare($sql);
-        $pre->bindParam(':name', $name);
-        $pre->bindParam(':description', $description);
-        $pre->bindParam(':avatar', $avatar);
-        $pre->bindParam(':start_date', $start_date);
-        $pre->bindParam(':end_date', $end_date);
-        $pre->bindParam(':course_duration', $course_duration);
+        $pre->bindParam(':DocDate', $doc_date);
+        $pre->bindParam(':DocNo', $doc_no);
+        $pre->bindParam(':Description', $description);
+        $pre->bindParam(':StartDate', $start_date);
+        $pre->bindParam(':EndDate', $end_date);
+        $pre->bindParam(':IsClosed', $is_closed);
+        $pre->bindParam(':EmployeeId', $employee_id);
+        return $pre->execute();
+    }
+
+    public function addPolicyDetail($policyId, $itemId, $itemName, $unit, $giftItemId, $giftQuantity, $giftMaxQuantity)
+    {   
+        $sql = "INSERT INTO `policydetails` (`PolicyId`, `ItemId`, `ItemName`, `Unit`, `GiftItemId`, `GiftQuantity`, `GiftMaxQuantity`) VALUES (:PolicyId, :ItemId, :ItemName, :Unit, :GiftItemId, :GiftQuantity, :GiftMaxQuantity)";
+        $pre= $this->pdo->prepare($sql);
+        $pre->bindParam(':PolicyId', $policyId);
+        $pre->bindParam(':ItemId', $itemId);
+        $pre->bindParam(':ItemName', $itemName);
+        $pre->bindParam(':Unit', $unit);
+        $pre->bindParam(':GiftItemId', $giftItemId);
+        $pre->bindParam(':GiftQuantity', $giftQuantity);
+        $pre->bindParam(':GiftMaxQuantity', $giftMaxQuantity);
         return $pre->execute();
     }
 

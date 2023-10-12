@@ -1,3 +1,11 @@
 #uploadedImages img {
     width: 100px;
 }
+
+#data-grid {
+    width: 1000px;
+}
+.list_order_detail thead tr th,
+.list_order_detail tbody tr td{
+    padding: 5px !important;
+}

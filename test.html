@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* CSS cho grid */
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 10px;
+        }
+        /* CSS cho ô nhập liệu */
+        .input {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="form-container">
+        <div class="grid">
+            <div>Mã</div>
+            <div>Tên</div>
+            <div></div> <!-- Ô trống -->
+            <div>
+                <button onclick="addRow()">Thêm</button>
+            </div>
+        </div>
+        <div class="grid" id="data-grid">
+            <input class="input" type="text" placeholder="Nhập mã">
+            <input class="input" type="text" placeholder="Nhập tên">
+            <button onclick="deleteRow(this)">Xóa</button>
+        </div>
+    </div>
+    
+    <script>
+        function addRow() {
+            const dataGrid = document.getElementById("data-grid");
+            const newRow = dataGrid.cloneNode(true);
+            dataGrid.parentNode.insertBefore(newRow, dataGrid.nextSibling);
+        }
+
+        function deleteRow(button) {
+            button.parentNode.parentNode.remove();
+        }
+    </script>
+</body>
+</html>
