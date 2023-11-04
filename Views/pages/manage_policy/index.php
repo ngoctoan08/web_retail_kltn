@@ -15,11 +15,11 @@ Chính sách khuyến mãi
                 <div class="col-md-12">
                     <!-- DATA TABLE-->
                     <div class="table-responsive table-responsive-data2 ">
-                        <table class="table table-data2 text-center list_course">
+                        <table class="table table-data2 text-center list_policy">
                             <thead>
                                 <tr>
                                     <th>Ngày</th>
-                                    <!-- <th>Ảnh</th> -->
+                                    <th>Số</th>
                                     <th>Diễn giải</th>
                                     <th>Ngày bắt đầu</th>
                                     <th>Ngày kết thúc</th>
@@ -28,37 +28,34 @@ Chính sách khuyến mãi
                                     <th>Thao tác</th>
                                 </tr>
                             </thead>
-                            <tbody id="list_course">
+                            <tbody id="list_policy">
                                 <?php 
-                                    foreach($courses as $course) {
+                                    foreach($policies as $policy) {
                                 ?>
-                                <tr class="tr-shadow" id="item_<?=$course['id']?>">
-                                    <td>
-                                        <a href="index.php?page=course&method=update&id=<?=$course['id']?>">
-                                            <?=$course['id']?>
-                                        </a>
-                                    </td>
-                                    <td class="desc"><?=$course['name']?></td>
-                                    <td><?=$course['start_date']?></td>
-                                    <td><?=$course['end_date']?></td>
-                                    <td><?=$course['course_duration']?></td>
-                                    <td><?=$course['status']?></td>
+                                <tr class="tr-shadow" id="item_<?=$policy['id']?>">
+                                    <td><?=$policy['DocDate']?></td>
+                                    <td><?=$policy['DocNo']?></td>
+                                    <td><?=$policy['Description']?></td>                       
+                                    <td><?=$policy['StartDate']?></td>
+                                    <td><?=$policy['EndDate']?></td>
+                                    <td><?=$policy['EmployeeName']?></td>
+                                    <td><?=$policy['IsClosed']?></td>
                                     <td>
                                         <div class="table-data-feature">
-                                            <button value="<?=$course['id']?>" class="item detail_product"
+                                            <button value="<?=$policy['Id']?>" class="item"
                                                 data-placement="top" title="More">
-                                                <a href="index.php?page=course&method=show&id=<?=$course['id']?>">
+                                                <a href="index.php?page=policy&method=show&id=<?=$policy['Id']?>">
                                                     <i class="zmdi zmdi-eye"></i>
                                                 </a>
                                             </button>
                                             <button class="item" data-toggle="tooltip" data-placement="top" title="Edit"
                                                 data-original-title="Edit">
-                                                <a href="index.php?page=course&method=edit&id=<?=$course['id']?>">
+                                                <a href="index.php?page=policy&method=edit&id=<?=$policy['Id']?>">
                                                     <i class="zmdi zmdi-edit"></i>
                                                 </a>
                                             </button>
-                                            <button data-id="<?=$course['id']?>"
-                                                url="index.php?page=course&method=delete&id=<?=$course['id']?>"
+                                            <button data-id="<?=$policy['Id']?>"
+                                                url="index.php?page=policy&method=delete&id=<?=$policy['Id']?>"
                                                 class="item del_item" data-toggle="tooltip" data-placement="top"
                                                 title="Delete">
                                                 <i class="zmdi zmdi-delete"></i>

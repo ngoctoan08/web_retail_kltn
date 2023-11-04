@@ -20,20 +20,42 @@ class Policy extends Connect
     
     public function showAllPolicy()
     {
-        $sql = "SELECT * FROM policies WHERE IsActive = 1";
+        $sql = "SELECT p.*, c.Name as EmployeeName FROM policies AS p LEFT JOIN customers AS c ON p.EmployeeId = c.Id 
+        WHERE p.IsActive = 1";
         $pre = $this->pdo->prepare($sql);
         $pre->execute();
         return $pre->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // show employee by id
-    public function showCourseById($courseId)
+
+    public function showPolicy($policyId)
     {
-        $sql = "SELECT * FROM courses  WHERE courses.id = :id";
+        $sql = "SELECT p.*, c.Name as EmployeeName FROM policies AS p LEFT JOIN customers AS c ON p.EmployeeId = c.Id 
+        WHERE p.IsActive = 1 AND p.Id =:id";
         $pre = $this->pdo->prepare($sql);
-        $pre->bindParam(':id', $courseId);
+        $pre->bindParam(':id', $policyId);
         $pre->execute();
         return $pre->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // show policy by id
+    public function showPolicyDetail($policyId)
+    {
+        $sql = "
+        SELECT tb1.*, tb2.Code AS GiftItemCode, tb2.Name AS GiftItemName 
+        FROM
+        (   
+            SELECT pd.Id, pd.PolicyId, pd.Itemid, i.Code AS ItemCode, i.Name AS ItemName, pd.GiftItemId, pd.GiftQuantity, pd.GiftMaxQuantity
+            FROM policydetails pd 
+            LEFT JOIN policies p ON pd.PolicyId = p.Id
+            LEFT JOIN item i ON pd.ItemId = i.Id
+            WHERE p.Id = :id AND p.IsActive = 1
+        ) AS tb1 
+        LEFT JOIN item tb2 ON tb1.GiftItemId = tb2.Id";
+        $pre = $this->pdo->prepare($sql);
+        $pre->bindParam(':id', $policyId);
+        $pre->execute();
+        return $pre->fetchAll(PDO::FETCH_ASSOC);
     }
     
     public function addPolicy($doc_date, $doc_no, $description, $start_date, $end_date, $is_closed, $employee_id)

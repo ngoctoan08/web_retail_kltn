@@ -23,10 +23,13 @@ class PolicyController extends Controller
             case 'store':
                 $this->store();
                 break;
-            // case 'show':
-            //     $id = isset($_GET['id']) ? $_GET['id'] : '';
-            //     $this->show($id);
-            //     break;
+            case 'getGiftItem':
+                $this->getGiftItem();
+                break;
+            case 'show':
+                $id = isset($_GET['id']) ? $_GET['id'] : '';
+                $this->show($id);
+                break;
             // case 'edit':
             //     $id = isset($_GET['id']) ? $_GET['id'] : '';
             //     $this->edit($id);
@@ -44,10 +47,6 @@ class PolicyController extends Controller
             //     break;
             default:
                 $policies = $this->policyModel->showAllPolicy();
-                echo '<pre>';
-                print_r($policies);
-                echo '</pre>';
-                die();
                 include_once './Views/pages/manage_policy/index.php';
                 break;
         }
@@ -59,16 +58,11 @@ class PolicyController extends Controller
         // echo "toandaika";
         $customers = $this->policyModel->showAllCustomer();
         $items = $this->itemModel->showAllItem();
-        
         include_once './Views/pages/manage_policy/create.php';
     }
 
     public function store()
     {  
-        echo '<pre>';
-        print_r($_POST);
-        echo '</pre>';
-
         if(isset($_POST)) {
             $employee_id = $_POST['employee'];
             $doc_date = $_POST['doc_date'];
@@ -95,8 +89,7 @@ class PolicyController extends Controller
                 }
                 if($addPolicy && $addPolicyDetail) {
                     $_SESSION['success'] = "Thêm chính sách mới thành công!";
-                    header('location: index.php?page=policy');
-                    // header('location: index.php?page=policy&method=show&id='.$lastIdPolicy);
+                    header('location: index.php?page=policy&method=show&id='.$lastIdPolicy);
                 }
             } catch (\Throwable $th) {
                 echo json_encode([
@@ -111,7 +104,13 @@ class PolicyController extends Controller
     {
         if(!empty($id))
         {
-            $course = $this->policyModel->showCourseById($id);
+            $policy = $this->policyModel->showPolicy($id);
+            $items = $this->policyModel->showPolicyDetail($id);
+
+            // echo '<pre>';
+            // print_r($items);
+            // echo '</pre>';
+            // die();
             // list học viên đky khóa học
             include_once './Views/pages/manage_policy/show.php';
         }
@@ -194,16 +193,22 @@ class PolicyController extends Controller
         }
     }
     
-    public function getPosition()
+    /*
+        return html to client
+    */
+    public function getGiftItem()
     {
         $data = json_decode(file_get_contents('php://input'), true);
-        // get posiotion by departmet id
+        
         if(isset($data)) {
-            $departmentId = $data['departmentId'];
-            $positions = $this->policyModel->showPosition($departmentId);
+            $listItemCode = $data['gift_item'];
+            $arrItemCode = explode(',', $listItemCode);
+            $outputString = '"' . implode('", "', $arrItemCode) . '"';
+            $giftItems = $this->itemModel->showGiftItemCodes($outputString);
             $html = '';
-            foreach($positions as $position) {
-                $html .= "<option value='" .$position['name']. "'" . ">" .$position['name']."</option>";
+            foreach($giftItems as $giftItem) {
+                // $html .= "<option value='" .$giftItem['name']. "'" . ">" .$giftItem['name']."</option>";
+                $html .= "<option value='" .$giftItem['Id']. "'". ">". $giftItem['Code']. " - " .$giftItem['Name']." </option>";
             }
             echo json_encode([
                 'status' => 200,

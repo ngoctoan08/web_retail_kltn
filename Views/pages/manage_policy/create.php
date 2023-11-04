@@ -132,6 +132,7 @@ Cập nhật chính sách bán lẻ
                                             </tr>
                                         </thead>
                                         <tbody id="data-grid">
+                                            
                                             <tr id="add-row">
                                                 <td>
                                                     <button type="button" onclick="addRow()">Ấn để thêm mới</button>
@@ -164,6 +165,7 @@ Cập nhật chính sách bán lẻ
 <script src="./public/shared/js/validator.js"></script>
 <script>
     function addRow() {
+        var randomNumber = getRand()
         const dataGrid = document.getElementById("data-grid");
         const buttonRow = dataGrid.querySelector('#add-row');
         const newRow = document.createElement("tr");
@@ -171,21 +173,22 @@ Cập nhật chính sách bán lẻ
         newRow.innerHTML = `
         <tr class="m-t-10">
             <td>
-                <select required name="ItemId[]"
-                class="form-control">
-                <option value=""></option>
-                <?php
-                    foreach($items as $item) {
-                ?>
-                    <option ItemId="<?=$item['Id']?>"
+                <select required name="ItemId[]" class="form-control change_item">
+                    <option value=""></option>
+                    <?php
+                        foreach($items as $item) {
+                    ?>
+                    <option ItemCode="<?=$item['Code']?>"
                         value="<?=$item['Id']?>">
                         <?=$item['Code']?> - <?=$item['Name']?>
                     </option>
-                <?php }?>
+                    <?php }?>
                 </select>
             </td>
             <td class="mini-input">
-                <input type="text" name="GiftItemId[]" class="form-control" value="999">
+               
+                <select required id="${randomNumber}" name="GiftItemId[]" class="form-control">
+
             </td>
             <td class="desc">
                 <input type="number" required min='0' step="1" name="GiftQuantity[]" class="form-control" value="2">         
@@ -203,12 +206,22 @@ Cập nhật chính sách bán lẻ
         </tr>
         `;
         dataGrid.insertBefore(newRow, buttonRow);
+
+        $('.change_item').on('change', function() {
+        var selectedOption = $(this).find("option:selected");
+        var itemCode = selectedOption.attr('ItemCode');
+        var url = "http://localhost:5500/http://localhost:8000/post_example"
+        data = {url, itemCode};
+        sendRequest(data, '#'+randomNumber);
+    });
     }
 
     function deleteRow(button) {
         const row = button.parentNode;
         row.remove();
     }
+
+
 </script>
 <?php $script = ob_get_clean(); ?>
 

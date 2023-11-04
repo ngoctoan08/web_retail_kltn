@@ -52,14 +52,25 @@ id, PolicyId, EffectiveDate, ItemId, ItemName, Unit, GiftItemId, GiftQuantity, M
 
 1. Quản lý vật tư: OKE
 
-2. Xử lý phần tạo chính sách
-2.1. Hoàn thiện form thêm mới
+2. Xử lý phần tạo chính sách 
+2.1. Hoàn thiện form thêm mới ok
 .... chưa xong
 -> nghĩ cách xử lý phần dưới lưới
 
 2.2. Xử lý phần thêm mới chính sách
 
-3. Hoàn thiện phần xử lý luật
-3.1. Tạo luật vào đầu vào, đầu ra 
+-> Tạo form thành công OK
+-> Tạo Ajax để lấy res từ api: tham khảo qlns ok
+-> tìm hiểu lại cách hiển thị
+-> Show màn hình
+-> 
 
-Sau khi hoàn thiện. viết một API gọi luật -> req: itemId, res giftId
+
+
+3. Hoàn thiện phần xử lý luật
+3.1. Tạo luật vào đầu vào, đầu ra -> Hiện tại chỉ xử lý từ file Excel
+3.2. Suy cách đưa vào database
+3.3. 
+3.4. Fix lỗi không bắt được sự kiện khi add html từ js vào
+
+Sau khi hoàn thiện. viết một API gọi luật -> req: itemId, res giftId ok 

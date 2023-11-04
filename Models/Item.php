@@ -28,6 +28,17 @@ class Item extends Connect
         $pre->execute();
         return $pre->fetch(PDO::FETCH_ASSOC);
     }
+
+    // show itemcode
+    public function showGiftItemCodes($itemCodes)
+    {
+        $sql = "SELECT * FROM item  WHERE Code IN (". $itemCodes .")  AND IsActive = 1";
+        // return $sql;
+        $pre = $this->pdo->prepare($sql);
+        // $pre->bindParam(':id', $itemId);
+        $pre->execute();
+        return $pre->fetchAll(PDO::FETCH_ASSOC);
+    }
       
     /**
      * @return array

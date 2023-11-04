@@ -41,9 +41,44 @@ $(document).ready(function () {
     });
 });
 
+function getRand(){
+    return new Date().getTime().toString() + Math.floor(Math.random()*1000000);
+}
 
 function sendRequest(dataRequest, selectorResult)
 {
+    var options = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(dataRequest.itemCode) // body data type must match "Content-Type" header
+    }
+    
+    // Fetch API 
+    fetch(dataRequest.url, options)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            if (data.status == 200) {
+                gift_item = data.gift_item;
+                var url = 'http://localhost/quan_ly_nhan_su/index.php?page=policy&method=getGiftItem';
+                req = {url, gift_item};
+                sendRequest1(req, selectorResult)
+            }
+            else {
+                alertError("Không tìm được luật!");
+            } 
+        })
+        .catch((err)=> {
+            console.log(err);
+        })
+}
+
+function sendRequest1(dataRequest, selectorResult)
+{
+    console.log(dataRequest);
     var options = {
         method: "POST",
         headers: {
@@ -58,38 +93,21 @@ function sendRequest(dataRequest, selectorResult)
         .then((response) => response.json())
         .then((data) => {
             if (data.status == 200) {
-                handleSuccessRespone(selectorResult, data.html)
-            } 
+                handleSuccessResponse(selectorResult, data.html)
+            }
+            
+        })
+        .catch((err)=> {
+            console.log(err);
         })
 }
-
 // handle onchange department
 $(document).ready(function () {
-    $('.change_department').on('change', function() {
-        var selectedOption = $(this).find("option:selected");
-        var departmentId = selectedOption.attr('departmentId');
-        var url = "index.php?page=employee&method=getPosition"
-        data = {url, departmentId};
-        sendRequest(data, '#position');
-    });
 
-    $('.change_department_1').on('change', function() {
-        var departmentName = $(this).val();
-        var url = "index.php?page=employee_result&method=get_employee"
-        data = {url, departmentName};
-        sendRequest(data, '#employee');
-    });
-
-    $('.change_employee').on('change', function() {
-        var employeeId = $(this).val();
-        var url = "index.php?page=employee_result&method=get_course"
-        data = {url, employeeId};
-        sendRequest(data, '#course');
-    });
 });
 
 // Xử lý kết quả ajax trả về
-function handleSuccessRespone(selectorResult, result)
+function handleSuccessResponse(selectorResult, result)
 {
     // inner html
     $(selectorResult).empty();
