@@ -55,7 +55,7 @@ function sendRequest(dataRequest, selectorResult)
         },
         body: JSON.stringify(dataRequest.itemCode) // body data type must match "Content-Type" header
     }
-    
+    console.log(dataRequest);
     // Fetch API 
     fetch(dataRequest.url, options)
         .then((response) => response.json())

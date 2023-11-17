@@ -124,7 +124,7 @@ Cập nhật chính sách bán lẻ
                                     <table class="table table-data2 text-center list_order_detail">
                                         <thead>
                                             <tr>
-                                                <th>Mã hàng mua</th>
+                                                <th>Mã hàng</th>
                                                 <th>Mã hàng tặng</th>
                                                 <th>Số lượng tặng</th>
                                                 <th>Tối đa</th>
@@ -210,8 +210,10 @@ Cập nhật chính sách bán lẻ
         $('.change_item').on('change', function() {
         var selectedOption = $(this).find("option:selected");
         var itemCode = selectedOption.attr('ItemCode');
-        var url = "http://localhost:5500/http://localhost:8000/post_example"
-        data = {url, itemCode};
+        var minSup = 0.02
+        var minConf = 0.6
+        var url = "http://localhost:5500/http://localhost:8000/association_rules"
+        data = {url, itemCode, minSup, minConf};
         sendRequest(data, '#'+randomNumber);
     });
     }
