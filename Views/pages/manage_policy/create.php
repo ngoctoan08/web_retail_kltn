@@ -212,7 +212,8 @@ Cập nhật chính sách bán lẻ
         var itemCode = selectedOption.attr('ItemCode');
         var minSup = 0.02
         var minConf = 0.6
-        var url = "http://localhost:5500/http://localhost:8000/association_rules"
+        // var url = "http://localhost:5500/http://localhost:8000/association_rules"
+        var url = "http://localhost:5500/http://127.0.0.1:8000/association_rules"
         data = {url, itemCode, minSup, minConf};
         sendRequest(data, '#'+randomNumber);
     });

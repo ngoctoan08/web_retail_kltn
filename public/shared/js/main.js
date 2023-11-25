@@ -53,11 +53,13 @@ function sendRequest(dataRequest, selectorResult)
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         },
-        body: JSON.stringify(dataRequest.itemCode) // body data type must match "Content-Type" header
+        body: JSON.stringify(dataRequest) // body data type must match "Content-Type" header
     }
-    console.log(dataRequest);
+    var urlApi = dataRequest.url;
+    console.log(urlApi);
+
     // Fetch API 
-    fetch(dataRequest.url, options)
+    fetch(urlApi, options)
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
